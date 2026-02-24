@@ -739,7 +739,7 @@
 
 Today's date is ${dateFormatted}.
 
-Search the web and generate a comprehensive report update. Return ONLY a valid JSON object with this exact structure (no markdown, no backticks, no preamble):
+Generate a comprehensive report update using real, current information. Return ONLY a valid JSON object with this exact structure (no markdown, no backticks, no preamble):
 
 {
   "summaryStats": {
@@ -810,7 +810,7 @@ Search the web and generate a comprehensive report update. Return ONLY a valid J
   ]
 }
 
-Ensure every claim is grounded in real, current information. Use confidence levels accurately:
+Ensure every claim is grounded in real, current information retrieved from the web. For each source, only include URLs you have actually retrieved and verified exist. If you are not certain a URL is real, omit it rather than guess. Use confidence levels accurately:
 - confirmed = directly from official platform docs, changelogs, or press releases
 - reported = from reputable trade press (Digital Commerce 360, eMarketer, Shopify blog, etc.)
 - inferred = logical conclusion drawn from multiple signals
