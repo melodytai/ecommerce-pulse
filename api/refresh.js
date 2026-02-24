@@ -14,16 +14,15 @@ export default async function handler(req, res) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
+          tools: [{ google_search: {} }],
           generationConfig: {
             temperature: 0.7,
-            maxOutputTokens: 3000,
-            responseMimeType: 'application/json'
+            maxOutputTokens: 4000
           }
         })
       }
     );
 
-    // Read as text first to avoid JSON parse errors on bad responses
     const raw = await geminiRes.text();
 
     let data;
