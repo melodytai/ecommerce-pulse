@@ -1,9 +1,17 @@
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '10mb',
+    },
+  },
+};
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { prompt } = req.body;
+  const { prompt } = req.body || {};
 
   if (!prompt) {
     return res.status(400).json({ error: 'Missing prompt' });
@@ -17,7 +25,7 @@ export default async function handler(req, res) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { temperature: 0.7, maxOutputTokens: 8000 }
+          generationConfig: { temperature: 0.7, maxOutputTokens: 4000 }
         })
       }
     );
@@ -29,9 +37,15 @@ export default async function handler(req, res) {
     }
 
     const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+
+    if (!text) {
+      return res.status(500).json({ error: 'Empty response from Gemini' });
+    }
+
     res.status(200).json({ text });
 
   } catch (err) {
+    console.error('Refresh function error:', err);
     res.status(500).json({ error: err.message });
   }
 }
